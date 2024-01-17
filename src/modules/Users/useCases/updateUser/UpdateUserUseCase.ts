@@ -9,7 +9,6 @@ class UpdateUserUseCase {
 
   validate(body: any) {
     const schema = z.object({
-      id: z.string({ required_error: "ID is required" }),
       name: z.string({ required_error: "Name is required" }),
       mail: z
         .string({ required_error: "Mail is required" })
@@ -20,9 +19,13 @@ class UpdateUserUseCase {
   }
 
   async execute(body: any, params: any) {
-    const data = this.validate({ ...body, ...params });
+    const data = this.validate(body);
+    const id = params.id;
+
+    if (!id) return HTTP(400, { message: "ID is required" });
     if (!data.success) return HTTP(400, { ...data, message: "Invalid data" });
-    const { id, mail, name } = data.data;
+
+    const { mail, name } = data.data;
 
     const userExists = await this.userRepository.findById(id);
     if (!userExists) return HTTP(400, { message: "User not exists" });

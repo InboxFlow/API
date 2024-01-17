@@ -15,7 +15,7 @@ class DeleteUserUseCase {
   }
 
   async execute(params: any) {
-    const data = this.validate({ ...params });
+    const data = this.validate(params);
     if (!data.success) return HTTP(400, { ...data, message: "Invalid data" });
     const { id } = data.data;
 

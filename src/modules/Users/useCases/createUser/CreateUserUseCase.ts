@@ -38,7 +38,7 @@ class CreateUserUseCase {
   }
 
   async execute(body: any) {
-    const data = this.validate({ ...body });
+    const data = this.validate(body);
     if (!data.success) return HTTP(400, { ...data, message: "Invalid data" });
     const { mail, name, password } = data.data;
 
