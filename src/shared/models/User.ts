@@ -1,5 +1,14 @@
 import { v4 } from "uuid";
 
+type UserDTO = {
+  id: string;
+  name: string;
+  mail: string;
+  verified: boolean;
+  created_at: Date;
+  updated_at: Date;
+};
+
 class UserModel {
   id: string;
   name: string;
@@ -29,4 +38,4 @@ class UserModel {
   }
 }
 
-export { UserModel };
+export { UserModel, type UserDTO };

@@ -1,21 +1,30 @@
-import type { UserModel } from "~/shared/models/User";
+import type { UserDTO, UserModel } from "~/shared/models/User";
 import type { UserRepositoryDTO } from "./UserRepositoryDTO";
 
 import { db } from "~/shared/services/db";
 
+const select = {
+  name: true,
+  mail: true,
+  id: true,
+  verified: true,
+  created_at: true,
+  updated_at: true,
+};
+
 class UserRepository implements UserRepositoryDTO {
   async findAll() {
-    const response = await db.user.findMany();
+    const response = await db.user.findMany({ select });
     return response;
   }
 
   async findById(id: string) {
-    const response = await db.user.findUnique({ where: { id } });
+    const response = await db.user.findUnique({ where: { id }, select });
     return response;
   }
 
   async findByMail(mail: string) {
-    const response = await db.user.findUnique({ where: { mail } });
+    const response = await db.user.findUnique({ where: { mail }, select });
     return response;
   }
 
@@ -23,7 +32,7 @@ class UserRepository implements UserRepositoryDTO {
     await db.user.create({ data });
   }
 
-  async updateUser(data: UserModel) {
+  async updateUser(data: UserDTO) {
     await db.user.update({ where: { id: data.id }, data });
   }
 
