@@ -3,7 +3,11 @@ import type { AuthRepositoryDTO } from "./AuthRepositoryDTO";
 
 class AuthRepository implements AuthRepositoryDTO {
   async findByMail(mail: string) {
-    return await db.user.findUnique({ where: { mail: mail } });
+    return await db.user.findUnique({ where: { mail } });
+  }
+
+  async findById(id: string) {
+    return await db.user.findUnique({ where: { id } });
   }
 
   async verifyUser(id: string) {

@@ -24,10 +24,10 @@ class CreateUserUseCase {
     return schema.safeParse(body);
   }
 
-  async generateVerifyToken(user_id: string) {
+  async generateVerifyToken(user: UserModel) {
     const alg = "HS256";
-    const secret = new TextEncoder().encode(process.env.JWT_KEY);
-    const token = await new SignJWT({ id: user_id })
+    const secret = new TextEncoder().encode(process.env.JWT_VERIFY_KEY);
+    const token = await new SignJWT({ id: user.id })
       .setProtectedHeader({ alg })
       .setIssuedAt()
       .setIssuer("urn:example:issuer")
@@ -36,6 +36,16 @@ class CreateUserUseCase {
       .sign(secret);
 
     return token;
+  }
+
+  async sendVerifyEmail(user: UserModel) {
+    const token = await this.generateVerifyToken(user);
+    await sendMail({
+      to: user.mail,
+      subject: "Validate your account",
+      text: "Verify your account",
+      html: `<a href="http://localhost:3000/verify?token=${token}">Verify your account</a>`,
+    });
   }
 
   async execute(body: any) {
@@ -51,12 +61,7 @@ class CreateUserUseCase {
 
     try {
       await this.userRepository.createUser(user);
-      await sendMail({
-        toMail: user.mail,
-        name: user.name,
-        verify_url: "https://google.com",
-        contact_url: "https://google.com",
-      });
+      await this.sendVerifyEmail(user);
       return HTTP(201, {
         message: "User created successfully! Verify your email",
       });
