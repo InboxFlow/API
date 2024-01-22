@@ -6,7 +6,11 @@ import { listUser } from "~/modules/Users/useCases/listUser";
 import { listUsers } from "~/modules/Users/useCases/listUsers";
 import { updateUser } from "~/modules/Users/useCases/updateUser";
 
+import { isAuthenticated } from "../middlewares/isAuthenticated";
+
 const userRoutes = new Hono();
+
+userRoutes.use("/*", isAuthenticated);
 
 userRoutes.post("", async (c) => await createUser.handle(c));
 userRoutes.delete("/:id", async (c) => await deleteUser.handle(c));
