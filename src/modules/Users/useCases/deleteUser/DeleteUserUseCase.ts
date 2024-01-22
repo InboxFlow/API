@@ -1,10 +1,14 @@
 import { z } from "zod";
 
+import { CachedRepository } from "~/modules/Cache/repository/CachedRepository";
 import { HTTP } from "~/shared/services/http";
 import type { UserRepository } from "../../repository/UserRepository";
 
 class DeleteUserUseCase {
-  constructor(private userRepository: UserRepository) {}
+  constructor(
+    private userRepository: UserRepository,
+    private cachedRepository: CachedRepository
+  ) {}
 
   validate(params: any) {
     const schema = z.object({
@@ -23,6 +27,9 @@ class DeleteUserUseCase {
     if (!userExists) return HTTP(400, { message: "User not exists" });
 
     try {
+      await this.cachedRepository.delete(`user-${id}`);
+      await this.cachedRepository.delete(`verified-${id}`);
+
       await this.userRepository.deleteUser(id);
       return HTTP(201, { message: "User deleted successfully!" });
     } catch (error) {

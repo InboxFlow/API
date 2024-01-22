@@ -20,7 +20,7 @@ export async function isAuthenticated(c: Context, next: Next) {
     const { payload } = await jwtVerify(token, secret);
 
     c.set("isAuthenticated", {
-      email: payload.email,
+      mail: payload.mail,
       id: payload.id,
     });
 
@@ -28,12 +28,11 @@ export async function isAuthenticated(c: Context, next: Next) {
     if (cachedUser) return await next();
 
     const userExists = await userRepository.findById(`${payload.id}`);
-    if (!userExists) return HTTP(401, { message: "Unauthorized" });
+    if (!userExists) return HTTP(401, { message: "User not exists" });
 
     await cachedRepository.set(`user-${payload.id}`, payload.id);
     return await next();
   } catch (error) {
-    console.log(error);
     return HTTP(401, { message: "Not a JWT token" });
   }
 }
