@@ -14,9 +14,9 @@ const userRoutes = new Hono();
 userRoutes.post("", async (c) => await createUser.handle(c));
 // Verified routes
 userRoutes.use("/*", isAuthenticated);
-userRoutes.delete("/:id", async (c) => await deleteUser.handle(c));
 userRoutes.get("", async () => await listUsers.handle());
 userRoutes.get("/:id", async (c) => await listUser.handle(c));
 userRoutes.put("/:id", async (c) => await updateUser.handle(c));
+userRoutes.delete("/:id", async (c) => await deleteUser.handle(c));
 
 export { userRoutes };

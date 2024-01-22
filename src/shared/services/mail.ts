@@ -1,4 +1,4 @@
-import sgMail from "@sendgrid/mail";
+import nodemailer from "nodemailer";
 
 type SendMailProps = {
   toMail: string;
@@ -7,21 +7,25 @@ type SendMailProps = {
   contact_url: string;
 };
 
+const user = process.env.NODEMAILER_MAIL;
+const pass = process.env.NODEMAILER_PASS;
+
 export async function sendMail(props: SendMailProps) {
-  const { toMail: to, name, verify_url, contact_url } = props;
-  const from = "lucasgoncalvesgithub@gmail.com";
-  const templateId = "d-b243a9ef7de4474bacc914146dd5c8e5";
+  const transporter = nodemailer.createTransport({
+    host: "smtp-mail.outlook.com",
+    port: 587,
+    secure: false,
+    auth: { user, pass },
+  });
 
-  sgMail.setApiKey(`${process.env.SENDGRID_API_KEY}`);
-  const msg: sgMail.MailDataRequired = {
-    to,
-    from,
-    templateId,
-    dynamicTemplateData: { name, verify_url, contact_url },
-  };
-
-  await sgMail
-    .send(msg)
-    .then(() => {})
-    .catch((error) => console.log("Error: " + error));
+  await transporter
+    .sendMail({
+      from: `Lucas DEV <${user}>`,
+      to: props.toMail,
+      subject: "Verify your email",
+      text: `Hello ${props.name}`,
+      html: "<p>Hello</p>",
+    })
+    .then(() => console.log("Email sent successfully"))
+    .catch((error) => console.log(error));
 }
