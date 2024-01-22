@@ -33,6 +33,7 @@ export async function isAuthenticated(c: Context, next: Next) {
     await cachedRepository.set(`user-${payload.id}`, payload.id);
     return await next();
   } catch (error) {
+    console.log(error);
     return HTTP(401, { message: "Not a JWT token" });
   }
 }

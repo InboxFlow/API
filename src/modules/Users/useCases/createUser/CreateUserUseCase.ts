@@ -5,6 +5,7 @@ import { z } from "zod";
 import { HTTP } from "~/shared/services/http";
 import { UserModel } from "~/shared/models/User";
 import type { UserRepository } from "../../repository/UserRepository";
+import { sendMail } from "~/shared/services/mail";
 
 class CreateUserUseCase {
   constructor(private userRepository: UserRepository) {}
@@ -50,7 +51,15 @@ class CreateUserUseCase {
 
     try {
       await this.userRepository.createUser(user);
-      return HTTP(201, { message: "User created successfully!" });
+      await sendMail({
+        toMail: user.mail,
+        name: user.name,
+        verify_url: "https://google.com",
+        contact_url: "https://google.com",
+      });
+      return HTTP(201, {
+        message: "User created successfully! Verify your email",
+      });
     } catch (error) {
       return HTTP(500, { message: "Internal server error", error });
     }

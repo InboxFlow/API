@@ -10,9 +10,10 @@ import { isAuthenticated } from "../middlewares/isAuthenticated";
 
 const userRoutes = new Hono();
 
-userRoutes.use("/*", isAuthenticated);
-
+// Unverified route
 userRoutes.post("", async (c) => await createUser.handle(c));
+// Verified routes
+userRoutes.use("/*", isAuthenticated);
 userRoutes.delete("/:id", async (c) => await deleteUser.handle(c));
 userRoutes.get("", async () => await listUsers.handle());
 userRoutes.get("/:id", async (c) => await listUser.handle(c));
