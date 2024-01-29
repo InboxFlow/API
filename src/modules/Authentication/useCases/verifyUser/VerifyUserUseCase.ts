@@ -3,6 +3,7 @@ import { z } from "zod";
 
 import { HTTP } from "~/shared/services/http";
 import { AuthRepository } from "../../repository/AuthRepository";
+import { env } from "~/env";
 
 class VerifyUserUseCase {
   constructor(private authRepository: AuthRepository) {}
@@ -20,7 +21,7 @@ class VerifyUserUseCase {
 
     const { token } = data.data;
     try {
-      const secret = new TextEncoder().encode(process.env.JWT_VERIFY_KEY);
+      const secret = new TextEncoder().encode(env.JWT_VERIFY_KEY);
       const verifyToken = await jwtVerify(token, secret);
 
       const user_id = verifyToken.payload.id as string;

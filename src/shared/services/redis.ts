@@ -1,7 +1,8 @@
 import { createClient } from "redis";
+import { env } from "~/env";
 
 const redis = createClient({
-  password: process.env.REDIS_PASSWORD,
+  password: env.REDIS_PASSWORD,
   socket: {
     host: "redis-12036.c308.sa-east-1-1.ec2.cloud.redislabs.com",
     port: 12036,

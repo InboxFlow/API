@@ -4,6 +4,7 @@ import { z } from "zod";
 
 import { HTTP } from "~/shared/services/http";
 import { AuthRepository } from "../../repository/AuthRepository";
+import { env } from "~/env";
 
 class SignUserUseCase {
   constructor(private authRepository: AuthRepository) {}
@@ -33,7 +34,7 @@ class SignUserUseCase {
     if (!match) return HTTP(401, { message: "Invalid password" });
 
     const alg = "HS256";
-    const secret = new TextEncoder().encode(process.env.JWT_KEY);
+    const secret = new TextEncoder().encode(env.JWT_KEY);
     const token = await new SignJWT({ mail: user.mail, id: user.id })
       .setProtectedHeader({ alg })
       .setIssuedAt()

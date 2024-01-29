@@ -1,5 +1,6 @@
 import { Context, Next } from "hono";
 import { jwtVerify } from "jose";
+import { env } from "~/env";
 
 import { CachedRepository } from "~/modules/Cache/repository/CachedRepository";
 import { UserRepository } from "~/modules/Users/repository/UserRepository";
@@ -16,7 +17,7 @@ export async function isAuthenticated(c: Context, next: Next) {
   const userRepository = new UserRepository();
 
   try {
-    const secret = new TextEncoder().encode(process.env.JWT_KEY);
+    const secret = new TextEncoder().encode(env.JWT_KEY);
     const { payload } = await jwtVerify(token, secret);
 
     c.set("isAuthenticated", {

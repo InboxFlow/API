@@ -5,6 +5,7 @@ import { HTTP } from "~/shared/services/http";
 import { AuthRepository } from "../../repository/AuthRepository";
 import { sendMail } from "~/shared/services/mail";
 import { UserModel } from "~/shared/models/User";
+import { env } from "~/env";
 
 class ResendCodeUseCase {
   constructor(private authRepository: AuthRepository) {}
@@ -18,7 +19,7 @@ class ResendCodeUseCase {
 
   async generateVerifyToken(user: UserModel) {
     const alg = "HS256";
-    const secret = new TextEncoder().encode(process.env.JWT_VERIFY_KEY);
+    const secret = new TextEncoder().encode(env.JWT_VERIFY_KEY);
     const token = await new SignJWT({ id: user.id })
       .setProtectedHeader({ alg })
       .setIssuedAt()

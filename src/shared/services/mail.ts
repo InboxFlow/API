@@ -1,4 +1,5 @@
 import nodemailer from "nodemailer";
+import { env } from "~/env";
 
 type SendMailProps = {
   to: string;
@@ -7,8 +8,8 @@ type SendMailProps = {
   html?: string;
 };
 
-const user = process.env.NODEMAILER_MAIL;
-const pass = process.env.NODEMAILER_PASS;
+const user = env.NODEMAILER_MAIL;
+const pass = env.NODEMAILER_PASS;
 
 export async function sendMail(props: SendMailProps) {
   const {

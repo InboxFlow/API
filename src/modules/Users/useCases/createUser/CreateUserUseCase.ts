@@ -6,6 +6,7 @@ import { HTTP } from "~/shared/services/http";
 import { UserModel } from "~/shared/models/User";
 import type { UserRepository } from "../../repository/UserRepository";
 import { sendMail } from "~/shared/services/mail";
+import { env } from "~/env";
 
 class CreateUserUseCase {
   constructor(private userRepository: UserRepository) {}
@@ -26,7 +27,7 @@ class CreateUserUseCase {
 
   async generateVerifyToken(user: UserModel) {
     const alg = "HS256";
-    const secret = new TextEncoder().encode(process.env.JWT_VERIFY_KEY);
+    const secret = new TextEncoder().encode(env.JWT_VERIFY_KEY);
     const token = await new SignJWT({ id: user.id })
       .setProtectedHeader({ alg })
       .setIssuedAt()
