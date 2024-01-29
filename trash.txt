@@ -1,0 +1,21 @@
+import { googleAuth } from "~/shared/services/googleAuth";
+
+
+authRoutes.post("/google", async (c) => {
+  try {
+    const body = await c.req.json();
+    const { aud, oauth, publicKeys } = await googleAuth();
+
+    const ticket = await oauth.verifySignedJwtWithCertsAsync(
+      body,
+      publicKeys.pubkeys,
+      aud,
+      ["https://cloud.google.com/iap"]
+    );
+
+    const payload = ticket.getPayload();
+    return c.json(payload);
+  } catch (err) {
+    return c.json(err);
+  }
+});

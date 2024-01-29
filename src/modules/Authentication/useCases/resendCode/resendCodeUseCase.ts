@@ -52,7 +52,7 @@ class ResendCodeUseCase {
       await this.sendVerifyEmail(user);
       return HTTP(200, { message: "Mail sent" });
     } catch (error) {
-      return HTTP(400, { message: "Invalid token" });
+      return HTTP(400, { message: "Invalidaaa token" });
     }
   }
 }

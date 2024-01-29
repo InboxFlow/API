@@ -6,17 +6,17 @@ import { UserRepository } from "~/modules/Users/repository/UserRepository";
 import { HTTP } from "~/shared/services/http";
 
 export async function isAuthenticated(c: Context, next: Next) {
-  let token = c.req.header()?.authorization;
+  const requestHeader = c.req.header();
+  let token = requestHeader?.authorization;
 
-  if (!token) return HTTP(401, { message: "Unauthorized" });
+  if (!token) return HTTP(401, { message: "Token not sent" });
   token = token.replace("Bearer ", "").replaceAll(" ", "");
-
-  const secret = new TextEncoder().encode(process.env.JWT_KEY);
 
   const cachedRepository = new CachedRepository();
   const userRepository = new UserRepository();
 
   try {
+    const secret = new TextEncoder().encode(process.env.JWT_KEY);
     const { payload } = await jwtVerify(token, secret);
 
     c.set("isAuthenticated", {

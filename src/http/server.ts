@@ -6,9 +6,13 @@ import { userRoutes } from "./routes/users.routes";
 
 const app = new Hono();
 
+app.get("/", (c) => c.text("Hello word"));
 app.route("/auth", authRoutes);
 app.route("/cached", cachedRoutes);
 // CRUD ROUTES
 app.route("/users", userRoutes);
 
-export default app;
+export default {
+  ...app,
+  port: 8080,
+};

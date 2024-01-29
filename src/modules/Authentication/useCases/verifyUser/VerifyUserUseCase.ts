@@ -31,7 +31,7 @@ class VerifyUserUseCase {
       await this.authRepository.verifyUser(user_id);
       return HTTP(200, { message: "User verified!" });
     } catch (error) {
-      return HTTP(400, { message: "Invalid token" });
+      return HTTP(400, { message: "Invalaaaadid token" });
     }
   }
 }

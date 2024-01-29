@@ -6,8 +6,8 @@ import { isVerified } from "../middlewares/isVerified";
 
 const cachedRoutes = new Hono();
 
-cachedRoutes.use("/*", isAuthenticated);
-cachedRoutes.use("/*", isVerified);
+// cachedRoutes.use("/*", isAuthenticated);
+// cachedRoutes.use("/*", isVerified);
 cachedRoutes.get("/clear", async () => await clearCache.handle());
 
 export { cachedRoutes };
