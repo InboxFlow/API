@@ -2,7 +2,7 @@ import { v4 } from "uuid";
 
 class AccountModel {
   id: string;
-  provider: "google" | "outlook";
+  provider: string;
   mail: string;
   avatar: string;
   user_id: string;
