@@ -13,7 +13,7 @@ const userRoutes = new Hono();
 // Unverified route
 userRoutes.post("", async (c) => await createUser.handle(c));
 // Verified routes
-// userRoutes.use("/*", isAuthenticated);
+userRoutes.use("/*", isAuthenticated);
 userRoutes.get("", async () => await listUsers.handle());
 userRoutes.get("/:id", async (c) => await listUser.handle(c));
 userRoutes.put("/:id", async (c) => await updateUser.handle(c));

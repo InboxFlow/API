@@ -1,13 +1,12 @@
 {
   "scripts": {
-    "dev": "bun run --hot src/http/server.ts"
+    "dev": "bun run --hot src/http/server.ts",
+    "lint": "bun x eslint . --ext .ts"
   },
   "dependencies": {
     "@prisma/client": "5.8.1",
     "bcryptjs": "^2.4.3",
-    "gcp-metadata": "^6.1.0",
-    "google-auth-library": "^9.4.2",
-    "hono": "^3.12.5",
+    "hono": "3.12.5",
     "jose": "^5.2.0",
     "nodemailer": "^6.9.8",
     "redis": "^4.6.12",
@@ -19,6 +18,13 @@
     "@types/bun": "^1.0.2",
     "@types/nodemailer": "^6.4.14",
     "@types/uuid": "^9.0.7",
-    "prisma": "^5.8.1"
+    "@typescript-eslint/eslint-plugin": "^6.20.0",
+    "@typescript-eslint/parser": "^6.20.0",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3",
+    "prisma": "5.8.1"
+  },
+  "engines": {
+    "bun": ">=1.0.0"
   }
 }
