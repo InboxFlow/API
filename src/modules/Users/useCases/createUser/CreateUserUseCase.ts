@@ -2,11 +2,11 @@ import { hash } from "bcryptjs";
 import { SignJWT } from "jose";
 import { z } from "zod";
 
-import { HTTP } from "~/shared/services/http";
-import { UserModel } from "~/shared/models/User";
-import type { UserRepository } from "../../repository/UserRepository";
-import { sendMail } from "~/shared/services/mail";
 import { env } from "~/env";
+import { UserModel } from "~/shared/models/User";
+import { HTTP } from "~/shared/services/http";
+import { sendMail } from "~/shared/services/mail";
+import type { UserRepository } from "../../repository/UserRepository";
 
 class CreateUserUseCase {
   constructor(private userRepository: UserRepository) {}
@@ -62,7 +62,7 @@ class CreateUserUseCase {
 
     try {
       await this.userRepository.createUser(user);
-      await this.sendVerifyEmail(user);
+      this.sendVerifyEmail(user);
       return HTTP(201, {
         message: "User created successfully! Verify your email",
       });

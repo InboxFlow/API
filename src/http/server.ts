@@ -5,7 +5,7 @@ import { authRoutes } from "./routes/auth.routes";
 import { cachedRoutes } from "./routes/cached.routes";
 import { userRoutes } from "./routes/users.routes";
 
-const app = new Hono();
+export const app = new Hono();
 
 app.route("/accounts", accountRoutes);
 app.route("/auth", authRoutes);
