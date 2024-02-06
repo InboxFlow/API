@@ -1,16 +1,12 @@
 import { z } from "zod";
 
 const envSchema = z.object({
-  //The JWT variables are used to sign and verify the token that is sent to the user's email to verify the account.
   JWT_KEY: z.string().min(3),
   JWT_VERIFY_KEY: z.string().min(3),
-  // The POSTGRES variables are used to connect to the Postgres database.
   POSTGRES_URL: z.string().min(3),
-  // The REDIS variables are used to connect to the Redis database, which is used to store the user's token and verify the account.
   REDIS_URL: z.string().min(3),
   REDIS_PORT: z.string().min(3).transform(Number),
   REDIS_PASSWORD: z.string().min(3),
-  // The NODEMAILER variables are used to send the email to the user to verify the account.
   NODEMAILER_MAIL: z.string().email(),
   NODEMAILER_PASS: z.string().min(3),
 });
