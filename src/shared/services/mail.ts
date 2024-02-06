@@ -23,11 +23,11 @@ export async function sendMail(props: SendMailProps) {
   const transporter = nodemailer.createTransport({
     host: "smtp-mail.outlook.com",
     port: 587,
-    secure: false,
+    secure: true,
     auth: { user, pass },
   });
 
   await transporter
     .sendMail({ from, to, subject, text, html })
-    .catch((error) => console.log(error));
+    .catch((error: any) => console.log(error));
 }

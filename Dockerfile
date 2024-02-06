@@ -14,6 +14,9 @@ WORKDIR /app
 # Set production environment
 ENV NODE_ENV="production"
 
+# Set Postgres environment
+ENV POSTGRES_URL="postgresql://Lucas-Eduardo-Goncalves:PIJF9DZoyCi2@ep-yellow-shadow-a5c4q2k9.us-east-2.aws.neon.tech/dev-database?sslmode=require"
+
 # Throw-away build stage to reduce size of final image
 FROM base as build
 

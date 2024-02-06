@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2023",
+    "target": "ESNext",
     "esModuleInterop": true,
     "strict": true,
     "jsx": "react-jsx",
