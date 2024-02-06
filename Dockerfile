@@ -1,7 +1,10 @@
 # syntax = docker/dockerfile:1
 
-# Adjust BUN_VERSION as desired
-FROM oven/bun:latest as base
+# Adjust BUN as desired
+FROM imbios/bun-node as base
+
+# Install bun
+RUN curl https://bun.sh/install | bash
 
 LABEL fly_launch_runtime="Bun/Prisma"
 
@@ -25,7 +28,7 @@ RUN bun install --ci
 # Generate Prisma Client
 COPY --link prisma .
 RUN bunx prisma generate
-RUN bunx prisma db oush
+RUN bunx prisma db push
 
 # Copy application code
 COPY --link . .
@@ -41,14 +44,7 @@ RUN apt-get update -qq && \
 # Copy built application
 COPY --from=build /app /app
 
-# # Setup sqlite3 on a separate volume
-# RUN mkdir -p /data
-# VOLUME /data
-
-# # Entrypoint prepares the database.
-# ENTRYPOINT [ "/app/docker-entrypoint.js" ]
-
-# Start the server by default, this can be overwritten at runtime
+# Start the server by default
 EXPOSE 3000
-# ENV DATABASE_URL="file:///data/sqlite.db"
-CMD [ "bun", "src/http/server.ts" ]
+
+CMD [ "bun", "run", "start" ]
