@@ -1,9 +1,9 @@
 import { jwtVerify } from "jose";
 import { z } from "zod";
 
-import { HTTP } from "~/shared/services/http";
-import { AuthRepository } from "../../repository/AuthRepository";
 import { env } from "~/env";
+import { HTTP } from "~/shared/services";
+import { AuthRepository } from "../../repository/AuthRepository";
 
 class VerifyUserUseCase {
   constructor(private authRepository: AuthRepository) {}

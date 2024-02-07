@@ -1,11 +1,13 @@
-import { UserDTO } from "~/shared/models/User";
+import { UserModel } from "~/shared/models";
+
+type UserDTO = Omit<UserModel, "password">;
 
 interface UserRepositoryDTO {
   findAll(): Promise<UserDTO[]>;
-  findById(id: string): Promise<UserDTO | null>;
-  findByMail(mail: string): Promise<UserDTO | null>;
+  findById(id: string): Promise<UserDTO | undefined>;
+  findByMail(mail: string): Promise<UserDTO | undefined>;
 
-  createUser(data: UserDTO): Promise<void>;
+  createUser(data: UserModel): Promise<void>;
   updateUser(data: UserDTO): Promise<void>;
   deleteUser(id: string): Promise<void>;
 }

@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { HTTP } from "~/shared/services/http";
+import { HTTP } from "~/shared/services";
 import type { AccountRepository } from "../../repository/AccountRepository";
 
 class DeleteAccountUseCase {

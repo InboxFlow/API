@@ -1,7 +1,7 @@
 import { z } from "zod";
 
+import { HTTP } from "~/shared/services";
 import { CachedRepository } from "~/modules/Cache/repository/CachedRepository";
-import { HTTP } from "~/shared/services/http";
 import type { UserRepository } from "../../repository/UserRepository";
 
 class DeleteUserUseCase {

@@ -1,4 +1,4 @@
-import { HTTP } from "~/shared/services/http";
+import { HTTP } from "~/shared/services";
 import { UserRepository } from "../../repository/UserRepository";
 
 class ListUsersUseCase {

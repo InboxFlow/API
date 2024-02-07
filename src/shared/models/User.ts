@@ -1,22 +1,13 @@
 import { v4 } from "uuid";
 
-type UserDTO = {
-  id: string;
-  name: string;
-  mail: string;
-  verified: boolean;
-  created_at: Date;
-  updated_at: Date;
-};
-
 class UserModel {
   id: string;
   name: string;
   mail: string;
   verified: boolean;
   password: string;
-  created_at: Date;
-  updated_at: Date;
+  created_at: string;
+  updated_at: string;
 
   constructor(defaults: Partial<UserModel> = {}) {
     const {
@@ -25,7 +16,7 @@ class UserModel {
       mail = "",
       password = "",
       verified = false,
-      created_at = new Date(),
+      created_at = new Date().toISOString(),
     } = defaults;
 
     this.id = id;
@@ -34,8 +25,8 @@ class UserModel {
     this.password = password;
     this.verified = verified;
     this.created_at = created_at;
-    this.updated_at = new Date();
+    this.updated_at = new Date().toISOString();
   }
 }
 
-export { UserModel, type UserDTO };
+export { UserModel };

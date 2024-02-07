@@ -1,11 +1,11 @@
 import { SignJWT } from "jose";
 import { z } from "zod";
 
-import { HTTP } from "~/shared/services/http";
-import { AuthRepository } from "../../repository/AuthRepository";
-import { sendMail } from "~/shared/services/mail";
-import { UserModel } from "~/shared/models/User";
 import { env } from "~/env";
+import { UserModel } from "~/shared/models";
+import { HTTP, sendMail } from "~/shared/services";
+
+import { AuthRepository } from "../../repository/AuthRepository";
 
 class ResendCodeUseCase {
   constructor(private authRepository: AuthRepository) {}

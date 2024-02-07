@@ -1,7 +1,7 @@
 import { z } from "zod";
 
-import { AccountModel } from "~/shared/models/Account";
-import { HTTP } from "~/shared/services/http";
+import { AccountModel } from "~/shared/models";
+import { HTTP } from "~/shared/services";
 
 import type { AccountRepository } from "../../repository/AccountRepository";
 

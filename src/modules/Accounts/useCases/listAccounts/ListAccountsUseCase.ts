@@ -1,6 +1,7 @@
-import { HTTP } from "~/shared/services/http";
+import { HTTP } from "~/shared/services";
+import type { AuthenticatedUser } from "~/shared/types";
+
 import { AccountRepository } from "../../repository/AccountRepository";
-import type { AuthenticatedUser } from "~/shared/types/AuthenticatedUser";
 
 class ListAccountsUseCase {
   constructor(private accountRepository: AccountRepository) {}

@@ -1,7 +1,8 @@
 import { z } from "zod";
 
-import { UserModel } from "~/shared/models/User";
-import { HTTP } from "~/shared/services/http";
+import { UserModel } from "~/shared/models";
+import { HTTP } from "~/shared/services";
+
 import type { UserRepository } from "../../repository/UserRepository";
 
 class UpdateUserUseCase {

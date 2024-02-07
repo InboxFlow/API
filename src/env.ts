@@ -3,7 +3,8 @@ import { z } from "zod";
 const envSchema = z.object({
   JWT_KEY: z.string().min(3),
   JWT_VERIFY_KEY: z.string().min(3),
-  POSTGRES_URL: z.string().min(3),
+  TURSO_URL: z.string().min(3),
+  TURSO_TOKEN: z.string().min(3),
   REDIS_URL: z.string().min(3),
   REDIS_PORT: z.string().min(3).transform(Number),
   REDIS_PASSWORD: z.string().min(3),

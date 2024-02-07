@@ -1,4 +1,4 @@
-import { HTTP } from "~/shared/services/http";
+import { HTTP } from "~/shared/services";
 import { CachedRepository } from "../../repository/CachedRepository";
 
 class ClearCacheUseCase {

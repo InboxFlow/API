@@ -1,6 +1,6 @@
 import type { Context } from "hono";
 
-import type { AuthenticatedUser } from "~/shared/types/AuthenticatedUser";
+import type { AuthenticatedUser } from "~/shared/types";
 import type { ListAccountsUseCase } from "./ListAccountsUseCase";
 
 class ListAccountsController {

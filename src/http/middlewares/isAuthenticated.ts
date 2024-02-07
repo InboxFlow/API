@@ -1,10 +1,11 @@
 import { Context, Next } from "hono";
 import { jwtVerify } from "jose";
+
 import { env } from "~/env";
+import { HTTP } from "~/shared/services";
 
 import { CachedRepository } from "~/modules/Cache/repository/CachedRepository";
 import { UserRepository } from "~/modules/Users/repository/UserRepository";
-import { HTTP } from "~/shared/services/http";
 
 export async function isAuthenticated(c: Context, next: Next) {
   const requestHeader = c.req.header();

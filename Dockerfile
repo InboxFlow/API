@@ -14,9 +14,6 @@ WORKDIR /app
 # Set production environment
 ENV NODE_ENV="production"
 
-# Set Postgres environment
-ENV POSTGRES_URL="postgresql://Lucas-Eduardo-Goncalves:PIJF9DZoyCi2@ep-yellow-shadow-a5c4q2k9.us-east-2.aws.neon.tech/dev-database?sslmode=require"
-
 # Throw-away build stage to reduce size of final image
 FROM base as build
 
@@ -28,13 +25,12 @@ RUN apt-get update -qq && \
 COPY --link bun.lockb package.json ./
 RUN bun install --ci
 
-# Generate Prisma Client
-COPY --link prisma .
-RUN bunx prisma generate
-RUN bunx prisma db push
-
 # Copy application code
 COPY --link . .
+
+# Generate Drizzle Client
+RUN bunx drizzle-kit generate:sqlite
+RUN bunx drizzle-kit push:sqlite
 
 # Final stage for app image
 FROM base

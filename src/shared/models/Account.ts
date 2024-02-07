@@ -6,8 +6,8 @@ class AccountModel {
   mail: string;
   avatar: string;
   user_id: string;
-  created_at: Date;
-  updated_at: Date;
+  created_at: string;
+  updated_at: string;
 
   constructor(defaults: Partial<AccountModel> = {}) {
     const {
@@ -16,7 +16,7 @@ class AccountModel {
       avatar = "",
       provider = "google",
       user_id = "",
-      created_at = new Date(),
+      created_at = new Date().toISOString(),
     } = defaults;
 
     this.id = id;
@@ -25,7 +25,7 @@ class AccountModel {
     this.provider = provider;
     this.user_id = user_id;
     this.created_at = created_at;
-    this.updated_at = new Date();
+    this.updated_at = new Date().toISOString();
   }
 }
 

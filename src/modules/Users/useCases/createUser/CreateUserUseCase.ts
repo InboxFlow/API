@@ -3,9 +3,9 @@ import { SignJWT } from "jose";
 import { z } from "zod";
 
 import { env } from "~/env";
-import { UserModel } from "~/shared/models/User";
-import { HTTP } from "~/shared/services/http";
-import { sendMail } from "~/shared/services/mail";
+import { UserModel } from "~/shared/models";
+import { HTTP, sendMail } from "~/shared/services";
+
 import type { UserRepository } from "../../repository/UserRepository";
 
 class CreateUserUseCase {

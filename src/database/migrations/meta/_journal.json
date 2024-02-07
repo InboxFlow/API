@@ -1,0 +1,27 @@
+{
+  "version": "5",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1707327657259,
+      "tag": "0000_cloudy_vanisher",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1707328406060,
+      "tag": "0001_moaning_aqueduct",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1707330252146,
+      "tag": "0002_amused_wildside",
+      "breakpoints": true
+    }
+  ]
+}
