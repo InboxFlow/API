@@ -2,8 +2,8 @@
   "type": "module",
   "module": "esm",
   "scripts": {
-    "dev": "bun run --hot src/http/server.ts",
-    "start": "bun run src/http/server.ts",
+    "dev": "bun run --hot src/infra/http/server.ts",
+    "start": "bun run src/infra/http/server.ts",
     "drizzle:generate": "bunx drizzle-kit generate:sqlite && bunx drizzle-kit push:sqlite",
     "test": "vitest --ui --config ./vitest.config.ts",
     "lint": "bun x eslint . --ext .ts"

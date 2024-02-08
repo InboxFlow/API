@@ -1,13 +1,13 @@
 import * as dotenv from "dotenv";
 
-import type { Config } from "drizzle-kit";
-import { env } from "~/env";
+import { Config } from "drizzle-kit";
+import { env } from "~/shared/helpers";
 
 dotenv.config();
 
 export default {
-  schema: "./src/database/schemas/*.ts",
-  out: "./src/database/migrations",
+  schema: "./src/infra/database/mappers/*.ts",
+  out: "./src/infra/database/migrations",
   driver: "turso",
   dbCredentials: {
     url: env.TURSO_URL,

@@ -1,5 +1,5 @@
 import { createClient } from "redis";
-import { env } from "~/env";
+import { env } from "~/shared/helpers";
 
 const redis = createClient({
   password: env.REDIS_PASSWORD,

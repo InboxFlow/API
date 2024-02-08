@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-import { env } from "~/env";
+import { env } from "~/shared/helpers";
 
 type SendMailProps = {
   to: string;
@@ -11,7 +11,7 @@ type SendMailProps = {
 const user = env.NODEMAILER_MAIL;
 const pass = env.NODEMAILER_PASS;
 
-export async function sendMail(props: SendMailProps) {
+async function sendMail(props: SendMailProps) {
   const {
     to,
     html = "<p>Hello</p>",
@@ -31,3 +31,5 @@ export async function sendMail(props: SendMailProps) {
     .sendMail({ from, to, subject, text, html })
     .catch((error: any) => console.log(error));
 }
+
+export { sendMail };
