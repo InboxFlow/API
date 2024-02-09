@@ -13,7 +13,7 @@ class ResendCodeUseCase {
     const schema = z.object({
       mail: z.string({ required_error: "Token is required" }),
     });
-    return schema.safeParse(params);
+    return schema.parse(params);
   }
 
   async generateVerifyToken(user: User) {
@@ -41,19 +41,13 @@ class ResendCodeUseCase {
   }
 
   async execute(params: any) {
-    const data = this.validate(params);
-    if (!data.success) return HTTP(400, { ...data, message: "Invalid data" });
+    const { mail } = this.validate(params);
 
-    try {
-      const { mail } = data.data;
-      const user = await this.authRepository.findByMail(mail);
-      if (!user) return HTTP(400, { message: "User not found" });
+    const user = await this.authRepository.findByMail(mail);
+    if (!user) return HTTP(400, { message: "User not found" });
 
-      await this.sendVerifyEmail(user);
-      return HTTP(200, { message: "Mail sent" });
-    } catch (error) {
-      return HTTP(400, { message: "Invalidaaa token" });
-    }
+    await this.sendVerifyEmail(user);
+    return HTTP(200, { message: "Mail sent" });
   }
 }
 

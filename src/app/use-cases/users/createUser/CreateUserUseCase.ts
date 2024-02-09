@@ -21,7 +21,7 @@ class CreateUserUseCase {
         .min(6, "Password must be at least 6 characters long"),
     });
 
-    return schema.safeParse(body);
+    return schema.parse(body);
   }
 
   async generateVerifyToken(user: User) {
@@ -49,9 +49,7 @@ class CreateUserUseCase {
   }
 
   async execute(body: any) {
-    const data = this.validate(body);
-    if (!data.success) return HTTP(400, { ...data, message: "Invalid data" });
-    const { mail, name, password } = data.data;
+    const { mail, name, password } = this.validate(body);
 
     const userExists = await this.userRepository.findByMail(mail);
     if (userExists) return HTTP(400, { message: "User already exists" });
@@ -59,15 +57,11 @@ class CreateUserUseCase {
     const passwordHash = await hash(password, 8);
     const user = new User({ name, mail, password: passwordHash });
 
-    try {
-      await this.userRepository.createUser(user);
-      this.sendVerifyEmail(user);
-      return HTTP(201, {
-        message: "User created successfully! Verify your email",
-      });
-    } catch (error) {
-      return HTTP(500, { message: "Internal server error", error });
-    }
+    await this.userRepository.createUser(user);
+    this.sendVerifyEmail(user);
+    return HTTP(201, {
+      message: "User created successfully! Verify your email",
+    });
   }
 }
 

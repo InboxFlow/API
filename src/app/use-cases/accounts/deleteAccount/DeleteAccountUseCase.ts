@@ -10,23 +10,17 @@ class DeleteAccountUseCase {
     const schema = z.object({
       id: z.string({ required_error: "ID is required" }),
     });
-    return schema.safeParse(params);
+    return schema.parse(params);
   }
 
   async execute(params: any) {
-    const data = this.validate(params);
-    if (!data.success) return HTTP(400, { ...data, message: "Invalid data" });
-    const { id } = data.data;
+    const { id } = this.validate(params);
 
     const accountExists = await this.accountRepository.findById(id);
     if (!accountExists) return HTTP(400, { message: "Account not exists" });
 
-    try {
-      await this.accountRepository.deleteAccount(id);
-      return HTTP(201, { message: "Account deleted successfully!" });
-    } catch (error) {
-      return HTTP(500, { message: "Internal server error", error });
-    }
+    await this.accountRepository.deleteAccount(id);
+    return HTTP(201, { message: "Account deleted successfully!" });
   }
 }
 

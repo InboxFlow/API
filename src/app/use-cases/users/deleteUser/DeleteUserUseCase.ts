@@ -15,26 +15,20 @@ class DeleteUserUseCase {
       id: z.string({ required_error: "ID is required" }),
     });
 
-    return schema.safeParse(params);
+    return schema.parse(params);
   }
 
   async execute(params: any) {
-    const data = this.validate(params);
-    if (!data.success) return HTTP(400, { ...data, message: "Invalid data" });
-    const { id } = data.data;
+    const { id } = this.validate(params);
 
     const userExists = await this.userRepository.findById(id);
     if (!userExists) return HTTP(400, { message: "User not exists" });
 
-    try {
-      await this.cachedRepository.delete(`user-${id}`);
-      await this.cachedRepository.delete(`verified-${id}`);
+    await this.cachedRepository.delete(`user-${id}`);
+    await this.cachedRepository.delete(`verified-${id}`);
+    await this.userRepository.deleteUser(id);
 
-      await this.userRepository.deleteUser(id);
-      return HTTP(201, { message: "User deleted successfully!" });
-    } catch (error) {
-      return HTTP(500, { message: "Internal server error", error });
-    }
+    return HTTP(201, { message: "User deleted successfully!" });
   }
 }
 

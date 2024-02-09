@@ -10,21 +10,15 @@ class ListUserUseCase {
     const schema = z.object({
       id: z.string({ required_error: "ID is required" }),
     });
-    return schema.safeParse(params);
+    return schema.parse(params);
   }
 
   async execute(params: any) {
-    const data = this.validate({ ...params });
-    if (!data.success) return HTTP(400, { ...data, message: "Invalid data" });
-    const { id } = data.data;
+    const { id } = this.validate(params);
 
-    try {
-      const user = await this.userRepository.findById(id);
-      if (!user) return HTTP(400, { message: "User not found" });
-      return HTTP(200, { data: user, message: "User" });
-    } catch (error) {
-      return HTTP(500, { message: "Internal server error", error });
-    }
+    const user = await this.userRepository.findById(id);
+    if (!user) return HTTP(400, { message: "User not found" });
+    return HTTP(200, { data: user, message: "User" });
   }
 }
 

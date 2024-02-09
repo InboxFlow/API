@@ -10,21 +10,16 @@ class ListAccountUseCase {
     const schema = z.object({
       id: z.string({ required_error: "ID is required" }),
     });
-    return schema.safeParse(params);
+    return schema.parse(params);
   }
 
   async execute(params: any) {
-    const data = this.validate({ ...params });
-    if (!data.success) return HTTP(400, { ...data, message: "Invalid data" });
-    const { id } = data.data;
+    const { id } = this.validate(params);
 
-    try {
-      const account = await this.accountRepository.findById(id);
-      if (!account) return HTTP(400, { message: "Account not found" });
-      return HTTP(200, { data: account, message: "Account" });
-    } catch (error) {
-      return HTTP(500, { message: "Internal server error", error });
-    }
+    const account = await this.accountRepository.findById(id);
+    if (!account) return HTTP(400, { message: "Account not found" });
+
+    return HTTP(200, { data: account, message: "Account" });
   }
 }
 

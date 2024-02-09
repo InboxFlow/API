@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import app from "~/http/server";
+import app from "~/infra/http/server";
 
 const user_data = JSON.stringify({
   name: "John Doe",

@@ -5,6 +5,8 @@ import { AccountRepository } from "~/app/repositories/account";
 import { HTTP } from "~/shared/helpers";
 import { AuthenticatedUser } from "~/shared/types";
 
+const validProviders = ["google"];
+
 class CreateAccountUseCase {
   constructor(private accountRepository: AccountRepository) {}
 
@@ -16,31 +18,22 @@ class CreateAccountUseCase {
         .email("Invalid email"),
       provider: z
         .string({ required_error: "Avatar is required" })
-        .refine((arg) => {
-          const validProviders = ["google", "outlook"];
-          return validProviders.includes(arg);
-        }, "Invalid provider"),
+        .refine((arg) => validProviders.includes(arg), "Invalid provider"),
     });
 
-    return schema.safeParse(body);
+    return schema.parse(body);
   }
 
   async execute(body: any, user: AuthenticatedUser) {
-    const data = this.validate(body);
-    if (!data.success) return HTTP(400, { ...data, message: "Invalid data" });
-    const { mail } = data.data;
+    const { mail, ...data } = this.validate(body);
 
     const accountExists = await this.accountRepository.findByMail(mail);
     if (accountExists) return HTTP(400, { message: "Account already exists" });
 
-    const account = new Account({ ...data.data, user_id: user.id });
+    const account = new Account({ ...data, user_id: user.id });
 
-    try {
-      await this.accountRepository.createAccount(account);
-      return HTTP(201, { message: "Account created successfully!" });
-    } catch (error) {
-      return HTTP(500, { message: "Internal server error", error });
-    }
+    await this.accountRepository.createAccount(account);
+    return HTTP(201, { message: "Account created successfully!" });
   }
 }
 

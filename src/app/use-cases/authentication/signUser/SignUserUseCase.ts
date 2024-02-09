@@ -18,13 +18,11 @@ class SignUserUseCase {
         .min(6, "Password must be at least 6 characters long"),
     });
 
-    return schema.safeParse(body);
+    return schema.parse(body);
   }
 
   async execute(body: any) {
-    const data = this.validate(body);
-    if (!data.success) return HTTP(400, { ...data, message: "Invalid data" });
-    const { mail, password } = data.data;
+    const { mail, password } = this.validate(body);
 
     const user = await this.authRepository.findByMail(mail);
     if (!user) return HTTP(400, { message: "User not found" });
@@ -43,7 +41,6 @@ class SignUserUseCase {
       .sign(secret);
 
     delete (user as { password?: string }).password;
-
     return HTTP(200, { message: "User signed!", data: { user, token } });
   }
 }

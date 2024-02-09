@@ -9,6 +9,7 @@ class UpdateAccountUseCase {
 
   validate(body: any) {
     const schema = z.object({
+      id: z.string({ required_error: "ID is required" }),
       avatar: z.string().optional(),
       provider: z
         .string()
@@ -19,27 +20,19 @@ class UpdateAccountUseCase {
         .optional(),
     });
 
-    return schema.safeParse(body);
+    return schema.parse(body);
   }
 
   async execute(body: any, params: any) {
-    const data = this.validate(body);
-    const id = params.id;
-
-    if (!id) return HTTP(400, { message: "ID is required" });
-    if (!data.success) return HTTP(400, { ...data, message: "Invalid data" });
+    const { id, ...data } = this.validate({ ...body, ...params });
 
     const accountExists = await this.accountRepository.findById(id);
     if (!accountExists) return HTTP(400, { message: "Account not exists" });
 
-    const account = new Account({ ...accountExists, ...data.data });
+    const account = new Account({ ...accountExists, ...data });
 
-    try {
-      await this.accountRepository.updateAccount(account);
-      return HTTP(201, { message: "Account updated successfully!" });
-    } catch (error) {
-      return HTTP(500, { message: "Internal server error", error });
-    }
+    await this.accountRepository.updateAccount(account);
+    return HTTP(201, { message: "Account updated successfully!" });
   }
 }
 

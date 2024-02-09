@@ -3,13 +3,13 @@ import { jwtVerify } from "jose";
 
 import { CachedRepository } from "~/app/repositories/cache";
 import { UserRepository } from "~/app/repositories/user";
-import { HTTP, env } from "~/shared/helpers";
+import { env } from "~/shared/helpers";
 
 export async function isAuthenticated(c: Context, next: Next) {
   const requestHeader = c.req.header();
   let token = requestHeader?.authorization;
 
-  if (!token) return HTTP(401, { message: "Token not sent" });
+  if (!token) throw new Error("Token not sent");
   token = token.replace("Bearer ", "").replaceAll(" ", "");
 
   const cachedRepository = new CachedRepository();
@@ -28,11 +28,11 @@ export async function isAuthenticated(c: Context, next: Next) {
     if (cachedUser) return await next();
 
     const userExists = await userRepository.findById(`${payload.id}`);
-    if (!userExists) return HTTP(401, { message: "User not exists" });
+    if (!userExists) throw new Error("Invalid JWT | User not exists");
 
     await cachedRepository.set(`user-${payload.id}`, payload.id);
     return await next();
   } catch (error) {
-    return HTTP(401, { message: "Not a JWT token" });
+    throw new Error("Invalid JWT | Not a valid type");
   }
 }

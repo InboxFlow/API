@@ -6,14 +6,15 @@
     "start": "bun run src/infra/http/server.ts",
     "drizzle:generate": "bunx drizzle-kit generate:sqlite && bunx drizzle-kit push:sqlite",
     "test": "vitest --ui --config ./vitest.config.ts",
-    "lint": "bun x eslint . --ext .ts"
+    "lint": "bun x eslint . --ext .ts",
+    "studio": "bun run drizzle-kit studio"
   },
   "dependencies": {
     "@libsql/client": "^0.4.3",
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.1",
     "drizzle-orm": "^0.29.3",
-    "hono": "3.12.11",
+    "hono": "4.0.0",
     "jose": "^5.2.1",
     "nodemailer": "^6.9.9",
     "redis": "^4.6.13",
@@ -21,9 +22,9 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@flydotio/dockerfile": "^0.5.0",
+    "@flydotio/dockerfile": "^0.5.1",
     "@types/bcryptjs": "^2.4.6",
-    "@types/bun": "^1.0.4",
+    "@types/bun": "^1.0.5",
     "@types/nodemailer": "^6.4.14",
     "@types/uuid": "^9.0.8",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
