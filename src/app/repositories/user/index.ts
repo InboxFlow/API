@@ -4,11 +4,11 @@ import { User } from "~/app/entities";
 import { users } from "~/infra/database/mappers";
 import { db } from "~/shared/services";
 
-import { UserRepositoryDTO } from "./RepositoryDTO";
+import { UserRepositoryDTO, SearchParams } from "./RepositoryDTO";
 
 class UserRepository implements UserRepositoryDTO {
-  async findAll() {
-    return await db.query.users.findMany();
+  async findAll(params: SearchParams) {
+    return await db.query.users.findMany(params);
   }
 
   async findById(id: string) {

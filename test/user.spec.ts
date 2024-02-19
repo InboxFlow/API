@@ -7,15 +7,6 @@ const user_data = JSON.stringify({
   password: "Abc@123",
 });
 
-/*
- 1° CREATE-USER
- 2° SIGN-USER
- 3° LIST-USERS
- 4° LIST-USER
- 4° UPDATE-USER
- 5° DELETE-USER
-*/
-
 describe("User", () => {
   let token = "";
   let user_id = "";

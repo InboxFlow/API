@@ -1,7 +1,4 @@
-import { relations } from "drizzle-orm";
 import { text, integer, sqliteTable } from "drizzle-orm/sqlite-core";
-
-import { accounts } from "./accounts";
 
 const users = sqliteTable("users", {
   id: text("id").primaryKey(),
@@ -14,8 +11,4 @@ const users = sqliteTable("users", {
   updated_at: text("updated_at").notNull(),
 });
 
-const usersRelations = relations(users, ({ many }) => ({
-  accounts: many(accounts),
-}));
-
-export { users, usersRelations };
+export { users };
