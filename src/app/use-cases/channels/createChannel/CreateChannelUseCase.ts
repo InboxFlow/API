@@ -16,15 +16,15 @@ class CreateChannelUseCase {
     return schema.parse(body);
   }
 
-  async execute(body: any) {
-    const validatedData = this.validate(body);
+  async execute(body: any, user_id: string) {
+    const validatedData = this.validate({ ...body, user_id });
 
     const channel = new Channel(validatedData);
 
     await this.channelRepository.createChannel(channel);
 
     return HTTP(201, {
-      message: "Channel created successfully! Verify your email",
+      message: "Channel created successfully!",
     });
   }
 }
