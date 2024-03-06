@@ -29,6 +29,13 @@
       "when": 1708385387335,
       "tag": "0003_slow_microchip",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1709696997388,
+      "tag": "0004_magical_winter_soldier",
+      "breakpoints": true
     }
   ]
 }
