@@ -1,6 +1,7 @@
 import { relations } from "drizzle-orm";
-import { text, integer, sqliteTable } from "drizzle-orm/sqlite-core";
+import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
+import { calls } from "./call";
 import { channels } from "./channels";
 
 const users = sqliteTable("users", {
@@ -15,6 +16,7 @@ const users = sqliteTable("users", {
 
 const user_relations = relations(users, ({ many }) => ({
   channels: many(channels),
+  calls: many(calls),
 }));
 
-export { users, user_relations };
+export { user_relations, users };

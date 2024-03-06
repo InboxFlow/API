@@ -7,7 +7,7 @@ interface SearchParams {
 }
 
 interface ChannelRepositoryDTO {
-  findAll(searchParams: SearchParams, user_id: string): Promise<Channel[]>;
+  findAll(searchParams: SearchParams): Promise<Channel[]>;
   findById(id: string): Promise<Channel | undefined>;
 
   createChannel(data: Channel): Promise<void>;

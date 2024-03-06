@@ -2,6 +2,7 @@ import { v4 } from "uuid";
 
 class Call {
   id: string;
+  user_id: string;
   channel_id: string;
   method: string;
   request: string;
@@ -14,6 +15,7 @@ class Call {
     const {
       id = v4(),
       channel_id = "",
+      user_id = "",
       method = "",
       request = "",
       response = "",
@@ -23,6 +25,7 @@ class Call {
 
     this.id = id;
     this.channel_id = channel_id;
+    this.user_id = user_id;
     this.method = method;
     this.request = request;
     this.response = response;
