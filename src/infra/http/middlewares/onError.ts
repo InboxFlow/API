@@ -2,6 +2,8 @@ import { ZodError } from "zod";
 import { HTTP } from "~/shared/helpers";
 
 function onError(error: Error) {
+  console.error(error);
+
   if (error instanceof ZodError) {
     const issues = error.issues.map((issue: any) => ({
       expected: issue?.expected || "",
