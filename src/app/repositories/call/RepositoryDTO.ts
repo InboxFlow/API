@@ -13,6 +13,7 @@ interface CallRepositoryDTO {
   createCall(data: Call): Promise<void>;
   updateCall(data: Call): Promise<void>;
   deleteCall(id: string): Promise<void>;
+  deleteAllCalls(id: string): Promise<void>;
 }
 
 export { SearchParams, CallRepositoryDTO };

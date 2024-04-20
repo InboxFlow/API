@@ -28,10 +28,6 @@ RUN bun install --ci
 # Copy application code
 COPY --link . .
 
-# Generate Drizzle Client
-# RUN bunx drizzle-kit generate:sqlite
-# RUN bunx drizzle-kit push:sqlite
-
 # Final stage for app image
 FROM base
 
