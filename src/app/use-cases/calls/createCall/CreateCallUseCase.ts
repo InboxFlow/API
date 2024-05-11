@@ -14,7 +14,14 @@ class CreateCallUseCase {
   ) {}
 
   validateMethod(data: string) {
-    const validateMethods = ["POST", "GET", "PUT", "DELETE"];
+    const validateMethods = [
+      "POST",
+      "GET",
+      "PUT",
+      "PATCH",
+      "DELETE",
+      "REMIX-ERROR",
+    ];
     if (!validateMethods.includes(data)) return false;
     return true;
   }
